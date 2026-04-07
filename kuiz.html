@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CerdikPandai – Kuiz Harian Ahli</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #1DB954;
+  --green-dark: #15803d;
+  --green-light: #dcfce7;
+  --green-mid: #86efac;
+  --yellow: #FCD34D;
+  --orange: #FB923C;
+  --red: #EF4444;
+  --bg: #F0FDF4;
+  --card: #ffffff;
+  --text: #1C2B1C;
+  --muted: #6B7F6C;
+  --radius: 20px;
+  --radius-sm: 14px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.08);
+  --shadow-green: 0 8px 32px rgba(29,185,84,0.25);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 16px 40px;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(29,185,84,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(252,211,77,0.10) 0%, transparent 50%);
+}
+
+/* ── HEADER ── */
+.header {
+  width: 100%; max-width: 540px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 0 20px;
+}
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand-logo {
+  width: 42px; height: 42px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(29,185,84,0.35);
+}
+.brand-name {
+  font-family: 'Baloo 2', cursive;
+  font-weight: 900; font-size: 1.2rem;
+  color: var(--text); line-height: 1.1;
+}
+.brand-name span { color: var(--green); }
+.brand-sub { font-size: 0.7rem; color: var(--muted); font-weight: 600; }
+.member-badge {
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: white; font-weight: 800; font-size: 0.75rem;
+  padding: 6px 14px; border-radius: 50px;
+  box-shadow: var(--shadow-green);
+}
+
+/* ── WELCOME BANNER ── */
+.welcome-banner {
+  width: 100%; max-width: 540px;
+  background: linear-gradient(135deg, var(--green-dark), #166534);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  color: white;
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.welcome-icon { font-size: 2.5rem; flex-shrink: 0; }
+.welcome-text h3 {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.1rem; font-weight: 900;
+  margin-bottom: 4px;
+}
+.welcome-text p { font-size: 0.82rem; font-weight: 600; opacity: 0.9; line-height: 1.5; }
+
+/* ── CARDS ── */
+.card {
+  width: 100%; max-width: 540px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+  animation: slideIn 0.35s cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+.card::before {
+  content: '';
+  position: absolute; top:0; left:0; right:0; height: 4px;
+  background: linear-gradient(90deg, var(--green), var(--yellow));
+}
+
+/* ── DARJAH SELECTION ── */
+.step-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-light); color: var(--green-dark);
+  font-size: 0.72rem; font-weight: 800;
+  padding: 4px 12px; border-radius: 50px; margin-bottom: 14px;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.step-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.3rem; font-weight: 900;
+  color: var(--text); margin-bottom: 6px;
+}
+.step-sub { font-size: 0.85rem; color: var(--muted); font-weight: 600; margin-bottom: 24px; }
+
+.darjah-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.darjah-btn {
+  padding: 20px 12px;
+  border-radius: var(--radius-sm);
+  border: 2px solid #e8f5e8;
+  background: #fafff9;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  font-family: 'Nunito', sans-serif;
+}
+.darjah-btn:hover { border-color: var(--green); background: var(--green-light); transform: translateY(-3px); box-shadow: var(--shadow-green); }
+.darjah-icon { font-size: 2rem; display: block; margin-bottom: 8px; }
+.darjah-label { font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 1rem; color: var(--text); display: block; }
+.darjah-sub { font-size: 0.72rem; color: var(--muted); font-weight: 700; }
+
+/* ── NAME INPUT ── */
+.name-screen { text-align: center; }
+.name-emoji { font-size: 3rem; margin-bottom: 12px; }
+.name-input {
+  width: 100%; padding: 14px 16px;
+  border: 2px solid var(--green-light);
+  border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem; font-weight: 700; color: var(--text);
+  outline: none; margin-bottom: 14px; margin-top: 16px;
+  transition: border-color 0.2s;
+}
+.name-input:focus { border-color: var(--green); }
+.selected-darjah-tag {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-light); color: var(--green-dark);
+  font-size: 0.8rem; font-weight: 800;
+  padding: 5px 14px; border-radius: 50px; margin-bottom: 4px;
+  cursor: pointer;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap { width: 100%; max-width: 540px; margin-bottom: 14px; display: none; }
+.progress-meta { display: flex; justify-content: space-between; font-size: 0.78rem; font-weight: 700; color: var(--muted); margin-bottom: 6px; }
+.progress-track { height: 8px; background: #d4f5e1; border-radius: 50px; overflow: hidden; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--green), #4ade80); border-radius: 50px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+
+/* ── QUIZ ── */
+.q-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--green-light); color: var(--green-dark);
+  font-size: 0.72rem; font-weight: 800;
+  padding: 4px 12px; border-radius: 50px; margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.q-number { font-size: 0.75rem; color: var(--muted); font-weight: 700; margin-bottom: 6px; }
+.q-text {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem; font-weight: 700;
+  color: var(--text); line-height: 1.45; margin-bottom: 20px;
+}
+.options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.option {
+  padding: 13px 16px; border-radius: var(--radius-sm);
+  border: 2px solid #e8f5e8; background: #fafff9;
+  cursor: pointer; font-weight: 700; font-size: 0.92rem;
+  color: var(--text); transition: all 0.18s;
+  display: flex; align-items: center; gap: 12px;
+}
+.option:hover:not(.locked) { border-color: var(--green); background: var(--green-light); transform: translateX(4px); }
+.option.correct { border-color: var(--green); background: var(--green-light); animation: pop 0.3s ease; }
+.option.wrong { border-color: var(--red); background: #FEF2F2; }
+@keyframes pop { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
+.opt-letter {
+  width: 30px; height: 30px; border-radius: 8px; background: #e8f5e8;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 0.82rem; flex-shrink: 0; transition: all 0.18s;
+}
+.option.correct .opt-letter { background: var(--green); color: white; }
+.option.wrong .opt-letter { background: var(--red); color: white; }
+.opt-icon { margin-left: auto; font-size: 1.1rem; }
+.locked { pointer-events: none; }
+
+/* ── FEEDBACK ── */
+.feedback {
+  padding: 13px 16px; border-radius: var(--radius-sm);
+  font-weight: 700; font-size: 0.88rem; line-height: 1.5;
+  margin-bottom: 16px; display: none;
+  animation: fadeUp 0.25s ease;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.feedback.correct { background: var(--green-light); border-left: 4px solid var(--green); color: #145214; display: block; }
+.feedback.wrong { background: #FEF2F2; border-left: 4px solid var(--red); color: #7f1d1d; display: block; }
+.feedback strong { display: block; font-size: 0.92rem; margin-bottom: 4px; }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, var(--green), var(--green-dark));
+  color: white; border: none; border-radius: var(--radius-sm);
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(29,185,84,0.35);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(29,185,84,0.45); }
+.btn-next { display: none; }
+.btn-next.visible { display: flex; }
+
+/* ── LOADING ── */
+.loading {
+  text-align: center; padding: 40px 20px;
+}
+.spinner {
+  width: 44px; height: 44px;
+  border: 4px solid var(--green-light);
+  border-top-color: var(--green);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 14px;
+}
+@keyframes spin { to{transform:rotate(360deg)} }
+.loading-text { font-weight: 700; color: var(--muted); }
+.loading-sub { font-size: 0.82rem; color: #aaa; margin-top: 4px; }
+
+/* ── SCORE ── */
+.score-screen { text-align: center; padding: 8px 0; }
+.score-emoji { font-size: 3.5rem; margin-bottom: 8px; }
+.score-title { font-family: 'Baloo 2', cursive; font-size: 1.5rem; font-weight: 900; color: var(--text); margin-bottom: 6px; }
+.score-sub { color: var(--muted); font-size: 0.88rem; font-weight: 600; margin-bottom: 20px; }
+.score-big { font-family: 'Baloo 2', cursive; font-size: 4rem; font-weight: 900; color: var(--green); line-height: 1; margin-bottom: 4px; }
+.score-label { font-size: 0.82rem; color: var(--muted); font-weight: 700; margin-bottom: 20px; }
+.stars { display: flex; justify-content: center; gap: 8px; font-size: 2rem; margin-bottom: 20px; }
+.review-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 20px; }
+.review-dot { aspect-ratio:1; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
+.review-dot.c { background: var(--green-light); }
+.review-dot.w { background: #FEF2F2; }
+.score-tags { display: flex; justify-content: center; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+.score-tag { background: var(--green-light); color: var(--green-dark); font-size: 0.75rem; font-weight: 800; padding: 4px 12px; border-radius: 50px; }
+.btn-retry { width: 100%; padding: 13px; background: var(--green); color: white; border: none; border-radius: var(--radius-sm); font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; }
+.btn-retry:hover { transform: translateY(-2px); }
+.btn-share { width: 100%; padding: 13px; background: #25D366; color: white; border: none; border-radius: var(--radius-sm); font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.92rem; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-share:hover { transform: translateY(-2px); background: #20b858; }
+.btn-change { width: 100%; padding: 11px; background: white; color: var(--green-dark); border: 2px solid var(--green-mid); border-radius: var(--radius-sm); font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.88rem; cursor: pointer; margin-top: 10px; transition: all 0.2s; }
+.btn-change:hover { background: var(--green-light); }
+
+/* ── NO QUIZ ── */
+.noquiz { text-align: center; padding: 32px 16px; }
+.noquiz-icon { font-size: 3rem; margin-bottom: 12px; }
+.noquiz-title { font-family: 'Baloo 2', cursive; font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.noquiz-sub { color: var(--muted); font-size: 0.88rem; font-weight: 600; line-height: 1.6; }
+
+@media (max-width: 400px) {
+  .darjah-grid { grid-template-columns: repeat(3,1fr); gap: 8px; }
+  .darjah-btn { padding: 16px 8px; }
+  .card { padding: 22px 18px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <a class="brand" href="https://cerdikpandai.com">
+    <div class="brand-logo">🎓</div>
+    <div>
+      <div class="brand-name">Cerdik<span>Pandai</span></div>
+      <div class="brand-sub">Kuiz Harian Ahli</div>
+    </div>
+  </a>
+  <div class="member-badge">⭐ Ahli</div>
+</div>
+
+<!-- WELCOME BANNER -->
+<div class="welcome-banner">
+  <div class="welcome-icon">🌅</div>
+  <div class="welcome-text">
+    <h3>Selamat Pagi! Kuiz Hari Ini Dah Sedia!</h3>
+    <p>Pilih darjah anak anda dan mulakan kuiz harian. Soalan baharu setiap hari sekolah.</p>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-meta">
+    <span id="progressLabel">Soalan 1 daripada 5</span>
+    <span id="scoreLabel">0 betul</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+</div>
+
+<!-- MAIN CARD -->
+<div class="card" id="mainCard">
+  <!-- STEP 1: DARJAH SELECTION -->
+  <div id="darjahScreen">
+    <div class="step-label">📚 Langkah 1</div>
+    <div class="step-title">Pilih Darjah Anak Anda</div>
+    <div class="step-sub">Soalan akan disesuaikan mengikut darjah yang dipilih.</div>
+    <div class="darjah-grid">
+      <div class="darjah-btn" onclick="selectDarjah(4)">
+        <span class="darjah-icon">4️⃣</span>
+        <span class="darjah-label">Darjah 4</span>
+        <span class="darjah-sub">Tahun 4</span>
+      </div>
+      <div class="darjah-btn" onclick="selectDarjah(5)">
+        <span class="darjah-icon">5️⃣</span>
+        <span class="darjah-label">Darjah 5</span>
+        <span class="darjah-sub">Tahun 5</span>
+      </div>
+      <div class="darjah-btn" onclick="selectDarjah(6)">
+        <span class="darjah-icon">6️⃣</span>
+        <span class="darjah-label">Darjah 6</span>
+        <span class="darjah-sub">Tahun 6</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2: NAME INPUT -->
+  <div id="nameScreen" style="display:none;">
+    <div class="name-screen">
+      <div class="step-label">✏️ Langkah 2</div>
+      <div class="step-title">Nama Anak Anda?</div>
+      <div id="selectedDarjahTag" class="selected-darjah-tag" onclick="goBackToDarjah()">
+        ← Tukar Darjah
+      </div>
+      <input type="text" class="name-input" id="nameInput" placeholder="Contoh: Haris, Siti, Wei Ming..." maxlength="30"/>
+      <button class="btn-primary" onclick="submitName()">Mulakan Kuiz →</button>
+    </div>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingScreen" style="display:none;">
+    <div class="loading">
+      <div class="spinner"></div>
+      <div class="loading-text">Memuatkan soalan hari ini...</div>
+      <div class="loading-sub">Sila tunggu sebentar</div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quizScreen" style="display:none;">
+    <div class="q-label" id="qLabel">📐 Matematik</div>
+    <div class="q-number" id="qNumber">Soalan 1 daripada 5</div>
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="optionsContainer"></div>
+    <div class="feedback" id="feedback"></div>
+    <button class="btn-primary btn-next" id="btnNext" onclick="nextQuestion()">Soalan Seterusnya →</button>
+  </div>
+
+  <!-- NO QUIZ -->
+  <div id="noquizScreen" style="display:none;">
+    <div class="noquiz">
+      <div class="noquiz-icon">📅</div>
+      <div class="noquiz-title">Tiada Kuiz Hari Ini</div>
+      <div class="noquiz-sub">Soalan baharu akan dimuatkan pada hari sekolah berikutnya.<br>Sementara itu, akses Vault anda untuk bahan pembelajaran tambahan.</div>
+      <br>
+      <a href="https://drive.google.com/drive/folders/1VZ95N4X4_4RrqXkayIh4CTdFOK8wdKVW?usp=drive_link" target="_blank" class="btn-primary" style="text-decoration:none;margin-top:16px;">
+        📚 Akses Vault Pembelajaran
+      </a>
+    </div>
+  </div>
+
+  <!-- SCORE -->
+  <div id="scoreScreen" style="display:none;">
+    <div class="score-screen">
+      <div class="score-emoji" id="scoreEmoji">🏆</div>
+      <div class="score-title" id="scoreTitle">Hebat!</div>
+      <div class="score-sub" id="scoreSub"></div>
+      <div class="score-big" id="scoreBig">5/5</div>
+      <div class="score-label">Markah Hari Ini</div>
+      <div class="stars" id="scoreStars"></div>
+      <div class="score-tags" id="scoreTags"></div>
+      <div class="review-grid" id="reviewGrid"></div>
+      <button class="btn-retry" onclick="retryQuiz()">🔄 Cuba Lagi</button>
+      <button class="btn-share" id="shareBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.11 1.523 5.836L.057 23.882l6.22-1.63A11.95 11.95 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.638-.52-5.13-1.422l-.368-.216-3.692.968.988-3.6-.24-.37A9.95 9.95 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Kongsikan Pencapaian
+      </button>
+
+      <!-- VAULT BUTTON -->
+      <a href="https://drive.google.com/drive/folders/1VZ95N4X4_4RrqXkayIh4CTdFOK8wdKVW?usp=drive_link" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:white;color:#15803d;border:2px solid #86efac;border-radius:14px;font-family:'Nunito',sans-serif;font-weight:800;font-size:0.92rem;text-decoration:none;margin-top:10px;transition:all 0.2s;" onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='white'">
+        📚 Akses Vault Pembelajaran
+      </a>
+
+      <button class="btn-change" onclick="resetAll()">🔄 Tukar Darjah</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ──
+const SHEET_ID = "102jJ6vgDAghMAH3aDaUpXdn1UKghaLXP";
+const SHEET_NAME = "Soalan Harian";
+const SUBJECT_EMOJI = {"matematik":"📐","bahasa melayu":"📖","sains":"🔬","bahasa inggeris":"🌍","pendidikan islam":"🌙"};
+
+function getEmoji(subj) {
+  const key = (subj||"").toLowerCase().trim();
+  for(const [k,v] of Object.entries(SUBJECT_EMOJI)) { if(key.includes(k)) return v; }
+  return "📝";
+}
+
+function getTodayMY() {
+  const now = new Date();
+  const my = new Date(now.getTime()+(8*60*60*1000));
+  const d = my.getUTCDate().toString().padStart(2,'0');
+  const m = (my.getUTCMonth()+1).toString().padStart(2,'0');
+  const y = my.getUTCFullYear();
+  const days = ["Ahad","Isnin","Selasa","Rabu","Khamis","Jumaat","Sabtu"];
+  const months = ["Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogos","Sep","Okt","Nov","Dis"];
+  const date = new Date(y, m-1, d);
+  return {d,m,y,str:`${d}/${m}/${y}`,display:`${days[date.getDay()]}, ${d} ${months[m-1]} ${y}`};
+}
+
+// ── STATE ──
+let selectedDarjah = null;
+let childName = "";
+let questions = [];
+let currentQ = 0;
+let score = 0;
+let answerStates = [];
+let todaySubject = "";
+
+// ── SCREENS ──
+function showScreen(id) {
+  ['darjahScreen','nameScreen','loadingScreen','quizScreen','noquizScreen','scoreScreen']
+    .forEach(s => document.getElementById(s).style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+
+// ── STEP 1: DARJAH ──
+function selectDarjah(d) {
+  selectedDarjah = d;
+  document.getElementById('selectedDarjahTag').innerHTML = `Darjah ${d} ← Tukar`;
+  showScreen('nameScreen');
+  setTimeout(() => document.getElementById('nameInput').focus(), 100);
+}
+
+function goBackToDarjah() {
+  showScreen('darjahScreen');
+}
+
+// ── STEP 2: NAME ──
+function submitName() {
+  const val = document.getElementById('nameInput').value.trim();
+  childName = val || 'Anak saya';
+  showScreen('loadingScreen');
+  loadQuestions();
+}
+
+document.addEventListener('keypress', e => {
+  if(e.key === 'Enter' && document.getElementById('nameScreen').style.display !== 'none') {
+    submitName();
+  }
+});
+
+// ── FETCH QUESTIONS ──
+async function loadQuestions() {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(SHEET_NAME)}`;
+  try {
+    const res = await fetch(url);
+    const text = await res.text();
+    const json = JSON.parse(text.substring(47, text.length-2));
+    const rows = json.table.rows;
+    const {str: todayStr} = getTodayMY();
+
+    const todayRows = rows.filter(row => {
+      const cell = row.c[0];
+      if(!cell || !cell.v) return false;
+      const cellVal = (typeof cell.v === 'string' ? cell.v : cell.f || '').trim();
+      // Match date AND darjah
+      const darjahCell = row.c[2]?.v || "";
+      const darjahMatch = darjahCell.toString().includes(selectedDarjah.toString());
+      return cellVal === todayStr && darjahMatch;
+    });
+
+    if(todayRows.length === 0) {
+      showScreen('noquizScreen');
+      document.getElementById('progressWrap').style.display = 'none';
+      return;
+    }
+
+    questions = todayRows.map(row => ({
+      subject:     row.c[3]?.v || "",
+      question:    row.c[4]?.v || "",
+      optA:        row.c[5]?.v || "",
+      optB:        row.c[6]?.v || "",
+      optC:        row.c[7]?.v || "",
+      optD:        row.c[8]?.v || "",
+      answer:      (row.c[9]?.v || "").trim().toUpperCase(),
+      explanation: row.c[10]?.v || "",
+    }));
+
+    todaySubject = questions[0]?.subject || "";
+    currentQ = 0; score = 0; answerStates = [];
+    document.getElementById('progressWrap').style.display = 'block';
+    showScreen('quizScreen');
+    renderQuestion();
+
+  } catch(e) {
+    showScreen('noquizScreen');
+  }
+}
+
+// ── QUIZ ──
+function renderQuestion() {
+  const q = questions[currentQ];
+  const total = questions.length;
+  const emoji = getEmoji(q.subject);
+
+  document.getElementById('qLabel').innerHTML = `${emoji} ${q.subject}`;
+  document.getElementById('qNumber').textContent = `Soalan ${currentQ+1} daripada ${total}`;
+  document.getElementById('qText').textContent = q.question;
+
+  const container = document.getElementById('optionsContainer');
+  container.innerHTML = '';
+  const letters = ['A','B','C','D'];
+  [q.optA, q.optB, q.optC, q.optD].forEach((opt, i) => {
+    if(!opt) return;
+    const btn = document.createElement('div');
+    btn.className = 'option';
+    btn.innerHTML = `<div class="opt-letter">${letters[i]}</div><span>${opt}</span><span class="opt-icon"></span>`;
+    btn.onclick = () => selectOption(i, letters[i]);
+    container.appendChild(btn);
+  });
+
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('feedback').innerHTML = '';
+  const btnNext = document.getElementById('btnNext');
+  btnNext.classList.remove('visible');
+  btnNext.textContent = currentQ < total-1 ? 'Soalan Seterusnya →' : 'Lihat Keputusan 🏆';
+  updateProgress();
+
+  const card = document.getElementById('mainCard');
+  card.style.animation = 'none';
+  requestAnimationFrame(() => { card.style.animation = 'slideIn 0.35s cubic-bezier(.4,0,.2,1)'; });
+}
+
+function selectOption(idx, letter) {
+  const q = questions[currentQ];
+  const options = document.querySelectorAll('.option');
+  options.forEach(o => o.classList.add('locked'));
+
+  const isCorrect = letter === q.answer;
+  if(isCorrect) score++;
+  answerStates[currentQ] = isCorrect;
+
+  const letters = ['A','B','C','D'];
+  const correctIdx = letters.indexOf(q.answer);
+  options[idx].classList.add(isCorrect ? 'correct' : 'wrong');
+  options[idx].querySelector('.opt-icon').textContent = isCorrect ? '✅' : '❌';
+  if(!isCorrect && correctIdx >= 0 && options[correctIdx]) {
+    options[correctIdx].classList.add('correct');
+    options[correctIdx].querySelector('.opt-icon').textContent = '✅';
+  }
+
+  const correctOpt = [q.optA, q.optB, q.optC, q.optD][correctIdx];
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = isCorrect
+    ? `<strong>🎉 Betul! Tahniah!</strong>${q.explanation}`
+    : `<strong>❌ Jawapan betul: ${q.answer} — ${correctOpt}</strong>${q.explanation}`;
+
+  document.getElementById('btnNext').classList.add('visible');
+  updateProgress();
+}
+
+function nextQuestion() {
+  if(currentQ < questions.length-1) { currentQ++; renderQuestion(); }
+  else showScore();
+}
+
+function updateProgress() {
+  const total = questions.length;
+  const done = answerStates.filter(v => v !== undefined).length;
+  document.getElementById('progressFill').style.width = (done/total*100) + '%';
+  document.getElementById('progressLabel').textContent = `Soalan ${currentQ+1} daripada ${total}`;
+  document.getElementById('scoreLabel').textContent = `${score} betul`;
+}
+
+// ── SCORE ──
+function showScore() {
+  document.getElementById('progressWrap').style.display = 'none';
+  showScreen('scoreScreen');
+
+  const total = questions.length;
+  const pct = score/total;
+  let emoji, title, sub;
+  if(pct === 1)      { emoji='🏆'; title='Sempurna! Luar Biasa!'; sub=`${childName} dapat semua betul hari ini!`; }
+  else if(pct >= 0.8){ emoji='⭐'; title='Hebat Sekali!'; sub=`${childName} hampir sempurna — teruskan!`; }
+  else if(pct >= 0.6){ emoji='👍'; title='Bagus!'; sub=`${childName} dah cuba yang terbaik!`; }
+  else               { emoji='💪'; title='Cuba Lagi!'; sub=`${childName} boleh buat lagi baik esok!`; }
+
+  document.getElementById('scoreEmoji').textContent = emoji;
+  document.getElementById('scoreTitle').textContent = title;
+  document.getElementById('scoreSub').textContent = sub;
+  document.getElementById('scoreBig').textContent = `${score}/${total}`;
+
+  const stars = Math.round(pct*3);
+  document.getElementById('scoreStars').innerHTML =
+    Array.from({length:3}, (_,i) => i<stars ? '⭐' : '☆').join('');
+
+  const {display} = getTodayMY();
+  document.getElementById('scoreTags').innerHTML =
+    `<span class="score-tag">${getEmoji(todaySubject)} ${todaySubject}</span>
+     <span class="score-tag">📅 ${display}</span>
+     <span class="score-tag">Darjah ${selectedDarjah}</span>`;
+
+  document.getElementById('reviewGrid').innerHTML =
+    answerStates.map(v => `<div class="review-dot ${v?'c':'w'}">${v?'✅':'❌'}</div>`).join('');
+
+  const {str} = getTodayMY();
+  const shareText = encodeURIComponent(
+    `🎓 ${childName} baru habis Kuiz Harian CerdikPandai!\n` +
+    `📅 ${str} | ${todaySubject} | Darjah ${selectedDarjah}\n\n` +
+    `✅ Markah: ${score}/${total} hari ini!\n\n` +
+    `Cuba platform pembelajaran terbaik Malaysia 👇\n` +
+    `🌐 cerdikpandai.com\n` +
+    `💰 Hanya RM20/bulan — termasuk panduan PAJSK lengkap! 🇲🇾`
+  );
+  document.getElementById('shareBtn').onclick = () => window.open(`https://wa.me/?text=${shareText}`, '_blank');
+}
+
+function retryQuiz() {
+  currentQ = 0; score = 0; answerStates = [];
+  document.getElementById('progressWrap').style.display = 'block';
+  showScreen('quizScreen');
+  renderQuestion();
+}
+
+function resetAll() {
+  selectedDarjah = null; childName = ""; questions = [];
+  currentQ = 0; score = 0; answerStates = [];
+  document.getElementById('nameInput').value = '';
+  document.getElementById('progressWrap').style.display = 'none';
+  showScreen('darjahScreen');
+}
+</script>
+</body>
+</html>
